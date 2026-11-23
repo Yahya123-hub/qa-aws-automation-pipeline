@@ -1,0 +1,10 @@
+<testsuites id="" name="" tests="2" failures="0" skipped="0" errors="0" time="3.1811209999999996">
+<testsuite name="api/booking.spec.ts" timestamp="2026-11-22T17:46:03.806Z" hostname="chromium" tests="1" failures="0" skipped="0" time="1.294" errors="0">
+<testcase name="booking API returns a valid booking list @smoke" classname="api/booking.spec.ts" time="1.294">
+</testcase>
+</testsuite>
+<testsuite name="ui/login.spec.ts" timestamp="2026-11-22T17:46:03.806Z" hostname="chromium" tests="1" failures="0" skipped="0" time="2.215" errors="0">
+<testcase name="valid user can log in @smoke" classname="ui/login.spec.ts" time="2.215">
+</testcase>
+</testsuite>
+</testsuites>

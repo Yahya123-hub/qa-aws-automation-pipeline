@@ -1,0 +1,26 @@
+{
+  "name": "qa-aws-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+  "test": "playwright test",
+  "test:smoke": "playwright test --grep @smoke",
+  "test:ui": "playwright test tests/ui",
+  "test:api": "playwright test tests/api",
+  "report": "playwright show-report"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}
