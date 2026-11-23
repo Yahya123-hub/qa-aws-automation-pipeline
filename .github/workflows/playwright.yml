@@ -16,6 +16,10 @@ jobs:
     name: Run UI and API Tests
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,7 +39,7 @@ jobs:
       - name: Run Playwright tests
         run: npm test
 
-      - name: Upload test reports
+      - name: Upload test reports as GitHub artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -44,3 +48,19 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
+
+      - name: Configure AWS credentials using OIDC
+        id: aws-credentials
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::670341164156:role/GitHubActionsQAReportsRole
+          aws-region: ap-south-1
+
+      - name: Upload reports to S3
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.aws-credentials.outcome == 'success'
+        run: |
+          REPORT_PATH="playwright/${GITHUB_RUN_NUMBER}-${GITHUB_SHA}"
+
+          aws s3 sync playwright-report/ "s3://qa-automation-reports-123/${REPORT_PATH}/html/"
+          aws s3 sync test-results/ "s3://qa-automation-reports-123/${REPORT_PATH}/test-results/"
